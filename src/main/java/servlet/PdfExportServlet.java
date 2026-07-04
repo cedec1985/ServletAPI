@@ -74,7 +74,7 @@ public class PdfExportServlet extends HttpServlet {
             }
 
         } catch (DocumentException | IOException e) {
-            response.sendError(500, "Erreur PDF : " + e.getMessage());
+        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la génération du PDF.");
         }
          request.getRequestDispatcher("/result.jsp").forward(request, response);
     }
