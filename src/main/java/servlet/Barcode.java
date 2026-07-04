@@ -84,7 +84,7 @@ public class Barcode extends HttpServlet {
         if ("ean-13".equals(type)) {
 
             if (code == null || !code.matches("\\d{12}")) {
-                response.sendError(500,"EAN‑13 doit contenir exactement 12 chiffres. Exemple : 123456789012");
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la génération du codebarre EAN-13, rentrez 12 chiffres.");
             } else {
                 // Calcul automatique du checksum
                 code = code + calculateEAN13Checksum(code);
