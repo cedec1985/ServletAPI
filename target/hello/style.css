@@ -1,0 +1,36 @@
+body {
+    background: #f5f7fa;
+    font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+.card {
+    border-radius: 12px;
+}
+
+h2, h3 {
+    font-weight: 600;
+}
+
+img.generated-code {
+    border: 1px solid #ddd;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.history-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.history-item img {
+    width: 120px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    background: white;
+}
+

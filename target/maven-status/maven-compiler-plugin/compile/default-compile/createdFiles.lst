@@ -1,0 +1,5 @@
+servlet\Time.class
+servlet\Barcode.class
+servlet\QRCode.class
+servlet\MatrixToImageWriter.class
+servlet\PdfExportServlet.class
