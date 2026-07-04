@@ -90,10 +90,8 @@
       </plugin>
     </plugins>
     
-    <finalName>${artifactId}</finalName>
+    <finalName>${project.artifactId}</finalName>
 </build>
     <name>hello</name>
     <description>Afiicher la date et l'heure du jour</description>
 </project>
-
-
