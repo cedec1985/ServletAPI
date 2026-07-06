@@ -12,7 +12,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>JSP Page</title>
-         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
        <!-- <link rel="stylesheet" href="style.css">  -->
     </head>
 <body class="bg-light">
@@ -33,7 +33,7 @@
   
   if("qrcode".equals(codeType)){
     String size=request.getParameter("size");
-    imgUrl = request.getContextPath() + "/QRCode?msg=" + msg + "&size=" + size;
+    imgUrl = "/QRCode?msg=" + msg + "&size=" + size;
     
     }
   else if("ean-13".equals(type)){
@@ -61,24 +61,23 @@
 <!-- QR CODE -->
 <div class="col-md-6">
 <h4>QR Code</h4>
-<img src="request.getContextPath() + /QRCode?msg=" + msg + "&size=" + size" class="generated-code img-fluid">
+<img src="QRCode?msg=" + msg + "&size=" + size class="generated-code img-fluid">
 </div>
 <div class="col-md-6">
 <h4>CODE BARRES</h4>
-<img src="request.getContextPath() + /Barcode?fmt=" + fmt + "&height=" + height + "&moduleWidth=" + moduleWidth + "&quietZone=" + quietZone + "&resolution=" + resolution + "&human-readable-pattern=" + pattern" class="img-fluid generated-code">      
+<img src="Barcode?fmt=" + fmt + "&height=" + height + "&moduleWidth=" + moduleWidth + "&quietZone=" + quietZone + "&resolution=" + resolution + "&human-readable-pattern=" + pattern class="img-fluid generated-code">      
 </div>
 <br><br>
 <div class="col-md-6">
 <h4>PDF</h4>
 <img src="PdfExportServlet?Barcode=<%= param %>&QRCode=<%= param %>"  class="img-fluid generated-code">      
-
+</div>
 <button class="btn btn-dark" onclick="printCodes()">Imprimer</button>
 <a href="PdfExportServlet?Barcode=<%= param %>&QRCode=<%= param %>" 
    class="btn btn-danger" target="_blank">
     Télécharger PDF
 </a>
 </div>  
-</div>
 </div>
 <script>
 function printCodes() {
