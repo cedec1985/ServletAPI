@@ -33,7 +33,7 @@
   
   if("qrcode".equals(codeType)){
     String size=request.getParameter("size");
-    imgUrl = request.getContextPath() + "/QRCode?msg=" + msg + "&size=" + size;
+    imgUrl = "/QRCode?msg=" + msg + "&size=" + size;
     
     }
   else if("ean-13".equals(type)){
