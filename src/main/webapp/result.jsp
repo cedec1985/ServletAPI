@@ -92,7 +92,6 @@
 </a>
 </div>  
 </div>
-</div>
 <script>
 function printCodes() {
     // On clone uniquement la zone à imprimer
