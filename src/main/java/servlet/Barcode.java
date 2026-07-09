@@ -32,7 +32,7 @@ import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 public class Barcode extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private String barCodePath = "images/out.png";
+    private final String barCodePath = "images/out.png";
 
     public Barcode(){
     super();
