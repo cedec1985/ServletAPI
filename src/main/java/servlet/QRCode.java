@@ -76,7 +76,7 @@ public class QRCode extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // processRequest(request, response);
+       
         String msg=request.getParameter("msg");
         if(msg == null || msg.isEmpty()) msg = "EMPTY";
         int size = Integer.parseInt(request.getParameter("size") != null ? request.getParameter("size"):"250");
@@ -111,6 +111,7 @@ public class QRCode extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        this.doGet(request, response);
         processRequest(request, response);
     }
 

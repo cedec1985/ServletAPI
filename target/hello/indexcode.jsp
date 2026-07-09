@@ -11,7 +11,7 @@
 </head>
 <body class="bg-light">
 
-<h1>Générer un code-barres ou un QR Code</h1>
+<h1 style="text-align:center">Générer un code-barres ou un QR Code</h1>
 
 <div class="container mt-5">
     <div class="card shadow">
@@ -20,12 +20,36 @@
 <form action="Barcode" method="get" class="row g-3">
     <div class="col-md-6">
     <label class="form-label">Type de code</label>
+    <input type="checkbox" name="codeTypes" value="ean"> EAN‑13
+    <input type="checkbox" name="codeTypes" value="qr"> QR Code
+    <input type="checkbox" name="codeTypes" value="code128"> CODE128
+    <input type="checkbox" name="codeTypes" value="gs1-128"> GS1‑128
+    <input type="checkbox" name="codeTypes" value="itf-14">ITF-14
+    <br><br>
+    </div>
+
+    <div class="col-md-6">
+    <label class="form-label">Type de code</label>
     <select class="form-select" name="codeType">
-         <option value="barcode">Code-barres</option>
-         <option value="qrcode">QR Code</option>
-    </select><br><br>
+    <option value="barcode">Code-barres</option>
+    <option value="qrcode">QR Code</option>
+    </select>
+    </div>
+    <div class="col-md-6">
+    <label class="form-label">code</label>
+    <select name="type" id="code-select">
+    <option value="">--Veuillez choisir une option--</option>
+    <option value="ean-13">EAN-13</option>
+    <option value="datamatrix">DATAMATRIX</option>
+    <option value="code128">CODE128</option>
+    <option value="gs1-128">GS1-128</option>
+    <option value="itf-14">ITF-14</option>
+    </select>
+    <br><br>
     </div>
     
+     
+   
     <div class="col-md-6">
     <label class="form-label">Libellé produit :</label>
     <input type="text" class="form-control" name="code" required>
@@ -34,7 +58,7 @@
 
     <div class="col-md-6">
     <label class="form-label">Code produit :</label>
-    <input type="text" class="form-control" name="msg" maxlength="12" required>
+    <input type="text" class="form-control" name="msg"  required>
     <br><br>
     </div>
 
@@ -59,10 +83,9 @@
     <input type="number" class="form-control" name="height" value="50">
     <br><br>
     </div>
-    
+    <!--
     <div class="col-md-6">
-    <label class="form-label">Type de code-barres :</label><!-- comment -->
-    <select name="type" class="form-select" >
+    <label class="form-label">Type de code-barres :</label>
         <option value="codabar">Codabar</option>
         <option value="code128">CODE128</option>
         <option value="datamatrix">DATAMATRIX</option>
@@ -73,7 +96,7 @@
     </select>
     <br><br>
     </div>
-    
+    -->
     <div class="col-md-6">
     <label class="form-label">Rapport large/étroit :</label>
     <select name="wf" class="form-select">

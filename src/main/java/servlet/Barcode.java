@@ -4,9 +4,13 @@
  */
 package servlet;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -14,6 +18,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.krysalis.barcode4j.impl.code128.Code128;
+import org.krysalis.barcode4j.impl.code128.Code128Bean;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
+import org.krysalis.barcode4j.tools.UnitConv;
 
 /**
  *
@@ -23,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Barcode extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+    private String barCodePath = "images/out.png";
 
     public Barcode(){
     super();
@@ -49,9 +58,66 @@ public class Barcode extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-            DonnerReponse(request,response);
+            
             response.setCharacterEncoding("utf-8");
             response.setContentType("text/html");
+            String[] codes = request.getParameterValues("codeTypes");
+            String message = request.getParameter("msg");
+           
+            List<String> urls = new ArrayList<>();
+
+            if (codes != null) {
+            for (String c : codes) {
+            switch (c) {
+                case "ean":
+                    // Validation EAN-13
+            if ("ean-13".equals(codes[0])) {
+
+            if (message == null || !message.matches("\\d{12}")) {
+                request.setAttribute("error", 
+                    "EAN‑13 doit contenir exactement 12 chiffres. Exemple : 123456789012");
+            } else {
+                // Calcul automatique du checksum
+                message = message + calculateEAN13Checksum(message);
+            }
+            }
+                    urls.add(request.getContextPath() + "/Barcode?msg="+ message +  "&type=ean-13");
+                break;
+                case "qr":
+                    urls.add(request.getContextPath() + "/QRCode?msg="+ message + "&size=250"   + "&type=qrcode");
+                break;
+                case "code128":
+                    urls.add(request.getContextPath() + "/Barcode?msg="+ message + "&type=code128");
+                break;
+                case "gs1-128":
+                    urls.add(request.getContextPath() + "/Barcode?msg=" + URLEncoder.encode(message, "UTF-8")
+                                + "&type=gs1-128");
+                break;
+                case "itf-14":
+                    if ("itf-14".equals(codes[4])) {
+
+            if (message == null || !message.matches("\\d{13}")) {
+                request.setAttribute("error", 
+                    "Erreur lors de la sélection du type de code barres.");
+            } else {
+                // Calcul automatique du checksum
+                message = message + calculateITF14Checksum(message);
+            }
+            }
+                    request.setAttribute("message", message);
+                    urls.add(request.getContextPath() + "/Barcode?msg=" + message + "&type=itf-14");
+                    break;
+                    default:
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la sélection du type de code barres.");
+
+            }}}
+            
+                request.setAttribute("msg", message);      
+                request.setAttribute("urls", urls);
+                request.setAttribute("codes",codes);
+                request.getRequestDispatcher("/result.jsp").forward(request, response);
+  
+          
             String msg = request.getParameter("code");
             String codeType = request.getParameter("codeType");
             String code = request.getParameter("msg");
@@ -61,13 +127,37 @@ public class Barcode extends HttpServlet {
             String type =request.getParameter("type");
             String width =request.getParameter("mw");
             String wf=request.getParameter("wf");
-            String dpi =request.getParameter("dpi");
             String hrp =request.getParameter("human-readable-pos");
             String hrf =request.getParameter("human-readable-font");
             String hrs =request.getParameter("human-readable-size");
             String hrpat =request.getParameter("human-readable-pattern");
             String hist =request.getParameter("history");
             
+ 
+            Code128Bean bean = new Code128Bean();
+            int dpi = 180;
+            bean.setModuleWidth(0.3);
+            bean.setHeight(15);
+            bean.setQuietZone(2);
+            bean.doQuietZone(true);
+
+// GS1-128 automatique si ton message contient des AI
+            String gs1 = "(00)" + msg;  // ou "(01)12345678901234(17)260731"
+            
+//Open output file
+      File outputFile = new File(barCodePath);
+
+      FileOutputStream out = new FileOutputStream(outputFile);
+    
+      BitmapCanvasProvider canvas = new BitmapCanvasProvider(
+          out, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+
+            bean.generateBarcode(canvas, gs1);
+            canvas.finish();
+           
+      System.out.println("Bar Code is generated successfully…");
+
+
             request.setAttribute("code", code);
             request.setAttribute("label", msg);
             request.setAttribute("fmt",fmt );
@@ -79,27 +169,12 @@ public class Barcode extends HttpServlet {
             request.setAttribute("dpi",dpi);
             request.setAttribute("codeType",codeType);
             request.setAttribute("history",hist);
-            
-        // Validation EAN-13
-        if ("ean-13".equals(type)) {
-
-            if (code == null || !code.matches("\\d{12}")) {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la génération du codebarre EAN-13, rentrez 12 chiffres.");
-            } else {
-                // Calcul automatique du checksum
-                code = code + calculateEAN13Checksum(code);
+            request.setAttribute("human-readable-pattern",hrpat);
+            request.setAttribute("human-readable-font",hrf);
+            request.setAttribute("human-readable-size",hrs);
+            request.setAttribute("human-readable-pos",hrp);
             }
-        }
-        request.setAttribute("code", code);
-        request.setAttribute("human-readable-pattern",hrpat);
-        request.setAttribute("human-readable-font",hrf);
-        request.setAttribute("human-readable-size",hrs);
-        request.setAttribute("human-readable-pos",hrp);
-       
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/result.jsp");
-		dispatcher.forward(request,response);
-    }
-
+    
     public int calculateEAN13Checksum(String code12) {
         int sumOdd = 0;
         int sumEven = 0;
@@ -117,6 +192,44 @@ public class Barcode extends HttpServlet {
         int total = sumOdd + (sumEven * 3);
         return (10 - (total % 10)) % 10;
     }
+    
+    public int calculateITF14Checksum(String code13) {
+    int sumOdd = 0;
+    int sumEven = 0;
+
+    for (int i = 0; i < 13; i++) {
+        int digit = Character.getNumericValue(code13.charAt(i));
+
+        if ((i % 2) == 0) {
+            sumOdd += digit;
+        } else {
+            sumEven += digit;
+        }
+    }
+
+    int total = sumOdd + (sumEven * 3);
+    return (10 - (total % 10)) % 10;
+}
+    
+public static String generateSSCC(String base17) {
+    if (base17 == null || base17.length() != 17 || !base17.matches("\\d+")) {
+        throw new IllegalArgumentException("SSCC must be 17 digits");
+    }
+
+    int sum = 0;
+    boolean weightThree = true; // start from right with weight 3
+
+    for (int i = base17.length() - 1; i >= 0; i--) {
+        int digit = Character.getNumericValue(base17.charAt(i));
+        sum += digit * (weightThree ? 3 : 1);
+        weightThree = !weightThree;
+    }
+
+    int checkDigit = (10 - (sum % 10)) % 10;
+
+    return base17 + checkDigit;
+}
+
  
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -142,33 +255,6 @@ public class Barcode extends HttpServlet {
         return "Short description";
 }
  
-   protected void DonnerReponse(HttpServletRequest request, HttpServletResponse reponse) 
-        throws IOException {
- 
-      reponse.setContentType("text/html");
-      PrintWriter out =reponse.getWriter();
-      out.println("<html>");
-      out.println("<body>");
-      out.println("<head>");
-      out.println("<title>Informations a disposition de la servlet</title>");
-      out.println("</head>");
-      out.println("<body>");
-      out.println("<p>Type mime de la requête :"
-        +request.getContentType()+"</p>");
-      out.println("<p>Protocole de la requête :"
-        +request.getProtocol()+"</p>");
-      out.println("<p>Adresse IP du client :"
-        +request.getRemoteAddr()+"</p>");
-      out.println("<p>Nom du client : "
-        +request.getRemoteHost()+"</p>");
-      out.println("<p>Nom du serveur qui a reçu la requête :"
-        +request.getServerName()+"</p>");
-      out.println("<p>Port du serveur qui a reçu la requête :"
-        +request.getServerPort()+"</p>");
-      out.println("<p>scheme: "+request.getScheme()+"</p>");
-      out.println("<p>liste des paramètres </p>");
-      out.println("</body>");
-      out.println("</html>");
-   }
+   
            
             }

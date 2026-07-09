@@ -46,11 +46,10 @@ public class PdfExportServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String qrUrl = request.getParameter("QRCode");
-        String eanUrl = request.getParameter("Barcode");
+        String qrUrl = request.getParameter("ean");
+        String eanUrl = request.getParameter("qr");
         request.setAttribute("qrUrl",qrUrl);
         request.setAttribute("eanUrl",eanUrl);
-        String param = request.getQueryString();
         response.setHeader("Content-Disposition", "attachment; filename=codes.pdf");
 
         try {
@@ -62,8 +61,8 @@ public class PdfExportServlet extends HttpServlet {
                 pdf.add(new com.lowagie.text.Paragraph(" "));
                 
                 // Charger les images
-                com.lowagie.text.Image qrImg = com.lowagie.text.Image.getInstance(new URL(param));
-                com.lowagie.text.Image eanImg = com.lowagie.text.Image.getInstance(new URL(param));
+                com.lowagie.text.Image qrImg = com.lowagie.text.Image.getInstance(new URL(qrUrl));
+                com.lowagie.text.Image eanImg = com.lowagie.text.Image.getInstance(new URL(eanUrl));
                 
                 qrImg.scaleToFit(250, 250);
                 eanImg.scaleToFit(250, 250);

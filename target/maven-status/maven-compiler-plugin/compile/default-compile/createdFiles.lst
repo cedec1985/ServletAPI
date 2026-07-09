@@ -1,5 +1,9 @@
+servlet\BarcodeUtil$BarCodeUtil.class
 servlet\Time.class
 servlet\Barcode.class
 servlet\QRCode.class
 servlet\MatrixToImageWriter.class
 servlet\PdfExportServlet.class
+servlet\BarcodeUtil.class
+Folder\Product.class
+Folder\ProductRepository.class
