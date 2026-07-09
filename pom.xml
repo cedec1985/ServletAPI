@@ -11,7 +11,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
        
-	<dependencies> <!-- dépendences pour les codes-barres -->
+	<dependencies> <!-- dépendances pour les codes-barres -->
             <dependency>
                 <groupId>net.sf.barcode4j</groupId>
                 <artifactId>barcode4j</artifactId>
