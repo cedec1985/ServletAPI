@@ -70,46 +70,39 @@ public class Barcode extends HttpServlet {
             if (codes != null) {
             for (String c : codes) {
             switch (c) {
-                case "ean":
+                case "ean" -> {
                     // Validation EAN-13
-            if ("ean-13".equals(codes[0])) {
-
-            if (message == null || !message.matches("\\d{12}")) {
-                request.setAttribute("error", 
-                    "EAN‑13 doit contenir exactement 12 chiffres. Exemple : 123456789012");
-            } else {
-                // Calcul automatique du checksum
-                message = message + calculateEAN13Checksum(message);
-            }
-            }
+                    if ("ean-13".equals(codes[0])) {
+                        
+                        if (message == null || !message.matches("\\d{12}")) {
+                            request.setAttribute("error",
+                                    "EAN‑13 doit contenir exactement 12 chiffres. Exemple : 123456789012");
+                        } else {
+                            // Calcul automatique du checksum
+                            message = message + calculateEAN13Checksum(message);
+                        }
+                    }
                     urls.add(request.getContextPath() + "/Barcode?msg="+ message +  "&type=ean-13");
-                break;
-                case "qr":
-                    urls.add(request.getContextPath() + "/QRCode?msg="+ message + "&size=250"   + "&type=qrcode");
-                break;
-                case "code128":
-                    urls.add(request.getContextPath() + "/Barcode?msg="+ message + "&type=code128");
-                break;
-                case "gs1-128":
-                    urls.add(request.getContextPath() + "/Barcode?msg=" + URLEncoder.encode(message, "UTF-8")
+                    }
+                case "qr" -> urls.add(request.getContextPath() + "/QRCode?msg="+ message + "&size=250"   + "&type=qrcode");
+                case "code128" -> urls.add(request.getContextPath() + "/Barcode?msg="+ message + "&type=code128");
+                case "gs1-128" -> urls.add(request.getContextPath() + "/Barcode?msg=" + URLEncoder.encode(message, "UTF-8")
                                 + "&type=gs1-128");
-                break;
-                case "itf-14":
+                case "itf-14" -> {
                     if ("itf-14".equals(codes[4])) {
-
-            if (message == null || !message.matches("\\d{13}")) {
-                request.setAttribute("error", 
-                    "Erreur lors de la sélection du type de code barres.");
-            } else {
-                // Calcul automatique du checksum
-                message = message + calculateITF14Checksum(message);
-            }
-            }
+                        
+                        if (message == null || !message.matches("\\d{13}")) {
+                            request.setAttribute("error",
+                                    "Erreur lors de la sélection du type de code barres.");
+                        } else {
+                            // Calcul automatique du checksum
+                            message = message + calculateITF14Checksum(message);
+                        }
+                    }
                     request.setAttribute("message", message);
                     urls.add(request.getContextPath() + "/Barcode?msg=" + message + "&type=itf-14");
-                    break;
-                    default:
-                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la sélection du type de code barres.");
+                    }
+                    default -> response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la sélection du type de code barres.");
 
             }}}
             
