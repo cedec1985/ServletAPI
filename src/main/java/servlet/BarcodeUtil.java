@@ -180,11 +180,9 @@ public class BarCodeUtil {
         
           System.out.println("Bar Code is generated successfully…");
         }
+      
         catch (IOException ex) {
-           
         }
-  }
 }
 }
-
-
+}
