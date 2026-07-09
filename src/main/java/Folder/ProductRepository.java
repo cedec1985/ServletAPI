@@ -20,7 +20,7 @@ public class ProductRepository {
         return products.get(id);
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         // TODO 
     }
 }
