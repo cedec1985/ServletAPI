@@ -6,7 +6,6 @@ package servlet;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -33,7 +32,8 @@ import org.krysalis.barcode4j.tools.UnitConv;
 public class BarcodeUtil extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    String barCodePath = "images/out.png"; 
+    String barcodePath = "images/out.png"; 
+    @SuppressWarnings("unused")
     String barcodePath2 ="images/out2.png";
  
 
@@ -98,7 +98,7 @@ public class BarcodeUtil extends HttpServlet {
       bean.setQuietZone(0.8);
     
       //Open output file
-      File outputFile = new File(barCodePath);
+      File outputFile = new File(barcodePath);
 
       FileOutputStream out = new FileOutputStream(outputFile);
     
