@@ -6,8 +6,10 @@ package servlet;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletConfig;
@@ -31,6 +33,9 @@ import org.krysalis.barcode4j.tools.UnitConv;
 public class BarcodeUtil extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+    String barCodePath = "images/out.png"; 
+    String barcodePath2 ="images/out2.png";
+ 
 
     public BarcodeUtil(){
         super();
@@ -79,17 +84,84 @@ public class BarcodeUtil extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BarCodeUtil barCodeUtil = new BarCodeUtil();
-    
-        // This will generate Bar-Code 3 of 9 format
-        barCodeUtil.createBarCode39("naeemgik - 12345");
-    
-      // This will generate Bar-Code 128 format
-        barCodeUtil.createBarCode128("0123456789");
         
-        request.getRequestDispatcher("/result.jsp").forward(request, response);
+        String msg = request.getParameter("msg");
+        
+         try {
+      // 1. Récupérer le message à encoder
+       
+      Code128Bean bean = new Code128Bean();
+      final int dpi = 160;
+      bean.setModuleWidth(UnitConv.in2mm(2.8f / dpi));
+      bean.doQuietZone(true);
+      bean.setBarHeight(30);
+      bean.setQuietZone(0.8);
+    
+      //Open output file
+      File outputFile = new File(barCodePath);
+
+      FileOutputStream out = new FileOutputStream(outputFile);
+    
+      BitmapCanvasProvider canvas = new BitmapCanvasProvider(
+          out, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+
+      //Generate the barcode
+      bean.generateBarcode(canvas, msg);
+   
+      //Signal end of generation
+      canvas.finish();
+    }
+    catch (IOException ex){
         
     }
+        
+        Code128Bean bean = new Code128Bean();
+        int dpi = 150;
+
+        // largeur du module (barre la plus fine)
+        bean.setModuleWidth(0.2); // en mm
+        bean.doQuietZone(true);
+
+        // 3. Préparer la réponse HTTP
+        response.setContentType("image/png");
+
+        OutputStream out = response.getOutputStream();
+        try {
+            // 4. Canvas pour image bitmap
+            BitmapCanvasProvider canvas = new BitmapCanvasProvider(
+                    out, "image/png", dpi,
+                    BufferedImage.TYPE_BYTE_BINARY, false, 0);
+
+            // 5. Générer le code‑barres
+            bean.generateBarcode(canvas, msg);
+
+            // 6. Finaliser
+            canvas.finish();
+            request.setAttribute("msg",msg);
+            
+        }
+        catch (IOException ex){
+        
+    }
+      
+          Code39Bean bean39 = new Code39Bean();
+          dpi = 160;
+
+          //Configure the barcode generator
+          bean39.setModuleWidth(UnitConv.in2mm(2.8f / dpi));
+
+          bean39.doQuietZone(true);
+
+          OutputStream out2 = response.getOutputStream();
+          //Set up the canvas provider for monochrome PNG output
+          BitmapCanvasProvider canvas = new BitmapCanvasProvider(
+              out2, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+
+          //Generate the barcode
+          bean39.generateBarcode(canvas, msg);
+          //Signal end of generation
+          canvas.finish();
+        }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -115,74 +187,4 @@ public class BarcodeUtil extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-
-public class BarCodeUtil {
-
-  String barCodePath = "images/out.png"; 
- 
-  
-  public void createBarCode128(String fileName) {
-    try {
-      Code128Bean bean = new Code128Bean();
-      final int dpi = 160;
-
-      //Configure the barcode generator
-      bean.setModuleWidth(UnitConv.in2mm(2.8f / dpi));
-
-      bean.doQuietZone(false);
-
-      //Open output file
-      File outputFile = new File(barCodePath);
-
-      FileOutputStream out = new FileOutputStream(outputFile);
-    
-      BitmapCanvasProvider canvas = new BitmapCanvasProvider(
-          out, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
-
-      //Generate the barcode
-      bean.generateBarcode(canvas, fileName);
-   
-      //Signal end of generation
-      canvas.finish();
-    
-      System.out.println("Bar Code is generated successfully…");
-    }
-    catch (IOException ex) {
-    }
-  
-  }
-  public void createBarCode39(String fileName) {
-
-        try {
-          Code39Bean bean39 = new Code39Bean();
-          final int dpi = 160;
-
-          //Configure the barcode generator
-          bean39.setModuleWidth(UnitConv.in2mm(2.8f / dpi));
-
-          bean39.doQuietZone(false);
-
-          //Open output file
-          File outputFile = new File(barCodePath + fileName + ".JPG");
-        
-          FileOutputStream out = new FileOutputStream(outputFile);
-        
-
-          //Set up the canvas provider for monochrome PNG output
-          BitmapCanvasProvider canvas = new BitmapCanvasProvider(
-              out, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
-
-          //Generate the barcode
-          bean39.generateBarcode(canvas, fileName);
-       
-          //Signal end of generation
-          canvas.finish();
-        
-          System.out.println("Bar Code is generated successfully…");
-        }
-      
-        catch (IOException ex) {
-        }
-}
-}
 }

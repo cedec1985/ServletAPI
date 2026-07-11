@@ -74,7 +74,7 @@
 <!-- QR CODE -->
 <div class="col-md-6">
 <h4>QR Code</h4>
-<img src=req.getContextPath()+ "QRCode?msg=" + msg + "&size=250" class="generated-code img-fluid">
+<img src="<%= request.getContextPath() %>/QRCode?msg=<%= msg %>&size=250" class="generated-code img-fluid">
 </div>
 <div class="col-md-6">
 <h4>CODE BARRES</h4>
@@ -91,7 +91,6 @@
     Télécharger PDF
 </a>
 </div>  
-</div>
 </div>
 <script>
 function printCodes() {
