@@ -32,9 +32,10 @@ import org.krysalis.barcode4j.tools.UnitConv;
 public class BarcodeUtil extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    String barcodePath = "images/out.png"; 
+    String barcodePath = "C:\\hello\\src\\main\\java\\images\\excel.png"; 
     @SuppressWarnings("unused")
-    String barcodePath2 ="images/out2.png";
+    String barcodePath2 ="/images/out2.png";
+   
  
 
     public BarcodeUtil(){
