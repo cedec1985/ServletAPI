@@ -68,7 +68,7 @@
 %>
 <!-- zone imprimable -->
 <div class="mt-4" id="print-area" style="text-align:center; margin-top:40px;">
-<img src="images/samsung.png" width="150" style="margin-bottom:20px;">
+<img src="images/samsung.png" width="150" >
 <h2 class="text-center mb-4">QR Code & EAN‑13 générés</h2>
 <div class="row text-center">
 <!-- QR CODE -->

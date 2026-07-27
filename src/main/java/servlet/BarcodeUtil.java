@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -17,10 +18,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.krysalis.barcode4j.impl.code128.Code128Bean;
 import org.krysalis.barcode4j.impl.code39.Code39Bean;
 import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 import org.krysalis.barcode4j.tools.UnitConv;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 
 /**
  *
@@ -160,7 +167,28 @@ public class BarcodeUtil extends HttpServlet {
           bean39.generateBarcode(canvas, msg);
           //Signal end of generation
           canvas.finish();
+
+        String msg2=request.getParameter("msg2");
+        if(msg2 == null || msg2.isEmpty()) msg2 = "EMPTY";
+        int size = Integer.parseInt(request.getParameter("size") != null ? request.getParameter("size"):"250");
+        request.setAttribute("size",size);
+        request.setAttribute("msg2",msg2);
+
+        
+        try{
+            BitMatrix matrix = new MultiFormatWriter().encode(
+            msg2,
+            BarcodeFormat.QR_CODE,
+            size,
+            size
+            );
+        
+            MatrixToImageWriter.writeToStream(matrix, msg2, response.getOutputStream());
+        
+        } catch (WriterException | IOException e){
+            response.sendError(500, "erreur avec la génération du QR Code");
         }
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.

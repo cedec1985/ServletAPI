@@ -9,25 +9,44 @@
          <link rel="stylesheet" href="style.css"> 
     </head>
     <body class="bg-light">
+        <span class="bord bord-haut">Coller le ruban adhésif ici</span>
+        <span class="bord bord-droite">Coller le ruban adhésif ici</span>
+        <span class="bord bord-bas">Coller le ruban adhésif ici</span>
+        <span class="bord bord-gauche">Coller le ruban adhésif ici</span>
+      
 <h2>Code‑barres généré par Barcode4J</h2>
+
+<div id="pallet-sheet" class="container p-4 shadow rounded" style=" margin-bottom:100px;">
+<div class="text-center mb-3">
+<img src="images/BAL.png" width="65">
+<img src="images/mondialrelay.jpg" width="200">
+</div>
+</div>
 
 <%
     String code = request.getParameter("msg");
     if (code == null || code.isEmpty()) {
-        code = "REF-123456";
+        code = "CODEBARRE-123456";
+    }
+    String code2 = (String) request.getParameter("msg2");
+    if (code2 == null || code2.isEmpty()) {
+        code2 = "QR-123456";
     }
 %>
-
-<p>Message encodé : <b><%= code %></b></p>
 
 <div class="bg-light">
 <!-- L’image est servie par la servlet -->
 <img src="<%= request.getContextPath() %>/BarcodeUtil?msg=<%= code %>" alt="Code-barres" class="generated-code img-fluid" />
-<img src="<%= request.getContextPath() %>/BarcodeUtil?msg=<%= code %>" alt="Code-barres" class="generated-code img-fluid" />
+<img src="<%= request.getContextPath() %>/BarcodeUtil?msg2=<%= code2 %>&size=250&type=qrcode" alt="QR Code" class="generated-code img-fluid" />
 </div>
 <form action="BarcodeUtil" method="get">
-    <label>Nouveau code :</label>
+    <label>Nouveau CODEBARRE :</label>
     <input type="text" name="msg" value="<%= code %>"/>
+    <button type="submit">Générer</button>
+</form>
+<form action="BarcodeUtil" method="get">
+    <label>Nouveau Code QR :</label>
+    <input type="text" name="msg2" value="<%= code2 %>"/>
     <button type="submit">Générer</button>
 </form>
 </body>
