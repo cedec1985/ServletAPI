@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>JSP Page</title>
          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-         <link rel="stylesheet" href="style.css"> 
+         <link rel="stylesheet" href="css/style.css"> 
     </head>
     <body class="bg-light">
         <span class="bord bord-haut">Coller le ruban adhésif ici</span>
@@ -28,25 +28,26 @@
     if (code == null || code.isEmpty()) {
         code = "CODEBARRE-123456";
     }
-    String code2 = (String) request.getParameter("msg2");
-    if (code2 == null || code2.isEmpty()) {
-        code2 = "QR-123456";
+    String code2 = request.getParameter("msg");
+    if(code2==null || code2.isEmpty()){
+    code2="QRCODE 45899663";
     }
+    
 %>
 
 <div class="bg-light">
 <!-- L’image est servie par la servlet -->
-<img src="<%= request.getContextPath() %>/BarcodeUtil?msg=<%= code %>" alt="Code-barres" class="generated-code img-fluid" />
-<img src="<%= request.getContextPath() %>/BarcodeUtil?msg2=<%= code2 %>&size=250&type=qrcode" alt="QR Code" class="generated-code img-fluid" />
+<img src="<%= request.getContextPath() %>/PurchaseOrder?msg=<%= code %>" alt="Code-barres" class="generated-code img-fluid" />
+<img src="<%= request.getContextPath() %>/PurchaseOrder?msg=<%= code2 %>&size=250&type=datamatrix&fmt=svg" alt="QR Code" class="generated-code img-fluid" />
 </div>
-<form action="BarcodeUtil" method="get">
+<form action="PurchaseOrder" method="get">
     <label>Nouveau CODEBARRE :</label>
     <input type="text" name="msg" value="<%= code %>"/>
     <button type="submit">Générer</button>
 </form>
-<form action="BarcodeUtil" method="get">
+<form action="PurchaseOrder" method="get">
     <label>Nouveau Code QR :</label>
-    <input type="text" name="msg2" value="<%= code2 %>"/>
+    <input type="text" name="msg" value="<%= code2 %>"/>
     <button type="submit">Générer</button>
 </form>
 </body>

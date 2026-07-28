@@ -1,5 +1,5 @@
 
-package Folder;
+package Product;
 
 /**
  *

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package servlet;
+package Servlet;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.krysalis.barcode4j.impl.code128.Code128Bean;
 import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 
@@ -25,13 +27,13 @@ import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
  *
  * @author cedric
  */
-@WebServlet(urlPatterns={"/servlet/Barcode"})
-public class Barcode extends HttpServlet {
+@WebServlet(urlPatterns={"/servlet/GenerateBarcode"})
+public class GenerateBarcode extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private final String barCodePath = "images/out.png";
 
-    public Barcode(){
+    public GenerateBarcode(){
     super();
     }
     
@@ -39,7 +41,7 @@ public class Barcode extends HttpServlet {
         public void init(ServletConfig config) throws ServletException {
         super.init(config); // indispensable !
         ServletContext sc = config.getServletContext(); 
-        sc.log( "Demarrage servlet BarcodeServlet" );// Ecrit les informations fournies en paramètre dans le fichier log du serveur
+        sc.log( "Demarrage servlet GenerateBarcode" );// Ecrit les informations fournies en paramètre dans le fichier log du serveur
    }
   
 
@@ -79,11 +81,11 @@ public class Barcode extends HttpServlet {
                             message = message + calculateEAN13Checksum(message);
                         }
                     }
-                    urls.add(request.getContextPath() + "/Barcode?msg="+ message +  "&type=ean-13");
+                    urls.add(request.getContextPath() + "/GenerateBarcode?msg="+ message +  "&type=ean-13");
                     }
-                case "qr" -> urls.add(request.getContextPath() + "/QRCode?msg="+ message + "&size=250"   + "&type=qrcode");
-                case "code128" -> urls.add(request.getContextPath() + "/Barcode?msg="+ message + "&type=code128");
-                case "gs1-128" -> urls.add(request.getContextPath() + "/Barcode?msg=" + URLEncoder.encode(message, "UTF-8")
+                case "qr" -> urls.add(request.getContextPath() + "/GenerateBarcode?msg="+ message + "&size=250"   + "&type=qrcode");
+                case "code128" -> urls.add(request.getContextPath() + "/GenerateBarcode?msg="+ message + "&type=code128");
+                case "gs1-128" -> urls.add(request.getContextPath() + "/GenerateBarcode?msg=" + URLEncoder.encode(message, "UTF-8")
                                 + "&type=gs1-128");
                 case "itf-14" -> {
                     if ("itf-14".equals(codes[4])) {
@@ -97,7 +99,7 @@ public class Barcode extends HttpServlet {
                         }
                     }
                     request.setAttribute("message", message);
-                    urls.add(request.getContextPath() + "/Barcode?msg=" + message + "&type=itf-14");
+                    urls.add(request.getContextPath() + "/GenerateBarcode?msg=" + message + "&type=itf-14");
                     }
                     default -> response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la sélection du type de code barres.");
 

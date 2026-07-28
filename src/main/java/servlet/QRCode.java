@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package servlet;
+package Servlet;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -78,11 +78,9 @@ public class QRCode extends HttpServlet {
             throws ServletException, IOException {
        
         String msg=request.getParameter("msg");
-        if(msg == null || msg.isEmpty()) msg = "EMPTY";
         int size = Integer.parseInt(request.getParameter("size") != null ? request.getParameter("size"):"250");
         request.setAttribute("size",size);
         request.setAttribute("msg",msg);
-        response.setContentType("image/png");
 
         
         try{

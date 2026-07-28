@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package servlet;
+package Servlet;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.krysalis.barcode4j.impl.code128.Code128Bean;
 import org.krysalis.barcode4j.impl.code39.Code39Bean;
+import org.krysalis.barcode4j.impl.datamatrix.DataMatrixBean;
 import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 import org.krysalis.barcode4j.tools.UnitConv;
 
@@ -33,8 +34,8 @@ import com.google.zxing.common.BitMatrix;
  *
  * @author cedric
  */
-@WebServlet(urlPatterns={"/servlet/BarcodeUtil"})
-public class BarcodeUtil extends HttpServlet {
+@WebServlet(urlPatterns={"/servlet/PurchaseOrder"})
+public class PurchaseOrder extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     String barcodePath = "C:\\hello\\src\\main\\java\\images\\excel.png"; 
@@ -43,14 +44,14 @@ public class BarcodeUtil extends HttpServlet {
    
  
 
-    public BarcodeUtil(){
+    public PurchaseOrder(){
         super();
     }
       @Override
         public void init(ServletConfig config) throws ServletException {
         super.init(config); // indispensable !
         ServletContext sc = config.getServletContext(); 
-        sc.log( "Demarrage servlet BarcodeUtil" );// Ecrit les informations fournies en paramètre dans le fichier log du serveur
+        sc.log( "Demarrage servlet PurchaseOrder" );// Ecrit les informations fournies en paramètre dans le fichier log du serveur
    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -69,10 +70,10 @@ public class BarcodeUtil extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BarcodeUtil</title>");
+            out.println("<title>Servlet PurchaseOrder</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BarcodeUtil at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet PurchaseOrder at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -109,7 +110,7 @@ public class BarcodeUtil extends HttpServlet {
       FileOutputStream out = new FileOutputStream(outputFile);
     
       BitmapCanvasProvider canvas = new BitmapCanvasProvider(
-          out, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+          out, "image/png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
 
       //Generate the barcode
       bean.generateBarcode(canvas, msg);
@@ -135,7 +136,7 @@ public class BarcodeUtil extends HttpServlet {
         try {
             // 4. Canvas pour image bitmap
             BitmapCanvasProvider canvas = new BitmapCanvasProvider(
-                    out, "image/png", dpi,
+                    out, "image/x-png", dpi,
                     BufferedImage.TYPE_BYTE_BINARY, false, 0);
 
             // 5. Générer le code‑barres
@@ -167,15 +168,30 @@ public class BarcodeUtil extends HttpServlet {
           bean39.generateBarcode(canvas, msg);
           //Signal end of generation
           canvas.finish();
+    
 
-        String msg2=request.getParameter("msg2");
-        if(msg2 == null || msg2.isEmpty()) msg2 = "EMPTY";
+        String msg2=request.getParameter("msg"); 
         int size = Integer.parseInt(request.getParameter("size") != null ? request.getParameter("size"):"250");
-        request.setAttribute("size",size);
         request.setAttribute("msg2",msg2);
+        request.setAttribute("size",size);
 
-        
-        try{
+            // 1. Initialiser le bean Data Matrix
+            DataMatrixBean datamatrix = new DataMatrixBean();
+            
+            datamatrix.setModuleWidth(UnitConv.in2mm(8.0f / dpi));
+            datamatrix.doQuietZone(false);
+            boolean antiAlias = false;
+            int orientation = 0;  
+            OutputStream data = response.getOutputStream();
+            BitmapCanvasProvider canvas2 = new BitmapCanvasProvider(data, "image/png",300,BufferedImage.TYPE_BYTE_BINARY, antiAlias, orientation);
+            
+   // 5. Générer le code-barres
+           bean.generateBarcode(canvas2, msg);
+                
+   // 6. Finaliser l'écriture
+         canvas.finish();
+            
+         try{
             BitMatrix matrix = new MultiFormatWriter().encode(
             msg2,
             BarcodeFormat.QR_CODE,
@@ -183,13 +199,13 @@ public class BarcodeUtil extends HttpServlet {
             size
             );
         
-            MatrixToImageWriter.writeToStream(matrix, msg2, response.getOutputStream());
+            MatrixToImageWriter.writeToStream(matrix, msg, response.getOutputStream());
         
         } catch (WriterException | IOException e){
             response.sendError(500, "erreur avec la génération du QR Code");
         }
+   
     }
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
