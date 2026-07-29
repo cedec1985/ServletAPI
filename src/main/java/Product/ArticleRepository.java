@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
-// Simple repository en mémoire (remplacez par une DAO/BD si besoin)
+
 public class ArticleRepository {
     private final List<Article> articles = Collections.synchronizedList(new ArrayList<>());
     private final AtomicInteger counter = new AtomicInteger(1);
