@@ -6,22 +6,34 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>JSP Page</title>
-         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-         <link rel="stylesheet" href="css/style.css"> 
+        
+         <link rel="stylesheet" href="css/style.css">
     </head>
-    <body class="bg-light">
+  <body class="bg-light">
+
+<div class="container py-5>
         <span class="bord bord-haut">Coller le ruban adhésif ici</span>
         <span class="bord bord-droite">Coller le ruban adhésif ici</span>
         <span class="bord bord-bas">Coller le ruban adhésif ici</span>
         <span class="bord bord-gauche">Coller le ruban adhésif ici</span>
       
-<h2>Code‑barres généré par Barcode4J</h2>
 
-<div id="pallet-sheet" class="container p-4 shadow rounded" style=" margin-bottom:100px;">
-<div class="text-center mb-3">
-<img src="images/BAL.png" width="65">
-<img src="images/mondialrelay.jpg" width="200">
-</div>
+<div class="text-center mb-5">
+
+    <img src="images/BAL.png" width="70">
+
+    <img src="images/mondialrelay.jpg"
+         class="ms-3"
+         width="220">
+
+    <h2 class="mt-4">
+        Génération des étiquettes
+    </h2>
+
+    <p class="text-muted">
+        Barcode4J - Mondial Relay
+    </p>
+
 </div>
 
 <%
@@ -66,51 +78,157 @@
 
 <div class="bg-light p-3">
 <% if (article != null) { %>
-    <h3>Fiche article</h3>
-    <ul>
-        <li>Id: <%= article.getId() %></li>
-        <li>Nom: <%= article.getName() %></li>
-        <li>Référence: <%= article.getRef() %></li>
-        <li>EAN: <%= article.getEan() %></li>
-        <li>Date livraison: <%= article.getDeliveryDate() %></li>
-        <li>Destinataire: <%= article.getRecipient() %></li>
-    </ul>
+   <div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white">
+        Fiche article
+    </div>
+
+    <div class="card-body">
+        <table class="table table-striped table-bordered">
+            <tbody>
+                <tr>
+                    <th width="30%">ID</th>
+                    <td><%= article.getId() %></td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td><%= article.getName() %></td>
+                </tr>
+                <tr>
+                    <th>Référence</th>
+                    <td><%= article.getRef() %></td>
+                </tr>
+                <tr>
+                    <th>EAN</th>
+                    <td><%= article.getEan() %></td>
+                </tr>
+                <tr>
+                    <th>Date livraison</th>
+                    <td><%= article.getDeliveryDate() %></td>
+                </tr>
+                <tr>
+                    <th>Destinataire</th>
+                    <td><%= article.getRecipient() %></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-info mb-0">
+            Code utilisé :
+            <strong><%= code %></strong>
+        </div>
+
+    </div>
+</div>
     <p>Code utilisé pour la génération: <strong><%= code %></strong></p>
 <% } else { %>
     <p>Aucun article trouvé pour articleId=<%= articleId %></p>
 <% } %>
 
-<!-- L’image est servie par la servlet PurchaseOrder (utilise le paramètre msg) -->
-<div class="row">
-  <div class="col-md-6 text-center">
-    <img src="<%= request.getContextPath() %>/servlet/PurchaseOrder?msg=<%= java.net.URLEncoder.encode(code, "UTF-8") %>" alt="Code-barres" class="generated-code img-fluid" />
-  </div>
-  <div class="col-md-6 text-center">
-    <img src="<%= request.getContextPath() %>/servlet/PurchaseOrder?msg=<%= java.net.URLEncoder.encode(code2, "UTF-8") %>&size=250&type=datamatrix&fmt=svg" alt="QR Code" class="generated-code img-fluid" />
-  </div>
-</div>
+<div class="row g-4">
+
+    <div class="col-md-6">
+        <div class="card text-center shadow-sm">
+
+            <div class="card-header">
+                Code-barres
+            </div>
+
+            <div class="card-body">
+
+                <img
+                    src="<%= request.getContextPath() %>/servlet/PurchaseOrder?msg=<%= java.net.URLEncoder.encode(code,"UTF-8") %>"
+                    class="img-fluid p-3"
+                    alt="Code-barres">
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card text-center shadow-sm">
+
+            <div class="card-header">
+                DataMatrix / QR
+            </div>
+
+            <div class="card-body">
+
+                <img
+                    src="<%= request.getContextPath() %>/servlet/PurchaseOrder?msg=<%= java.net.URLEncoder.encode(code2,"UTF-8") %>&size=250&type=datamatrix&fmt=svg"
+                    class="img-fluid p-3"
+                    alt="QR">
+
+            </div>
+
+        </div>
+    </div>
+
 </div>
 
 <hr/>
+<form action="PurchaseOrder" method="get" class="row g-3 mb-4">
 
-<div class="container">
-<form action="PurchaseOrder" method="get" class="mb-2">
-    <label>Nouveau CODEBARRE :</label>
-    <input type="text" name="msg" value="<%= code %>"/>
-    <button type="submit">Générer</button>
-</form>
-<form action="PurchaseOrder" method="get">
-    <label>Nouveau Code QR :</label>
-    <input type="text" name="msg" value="<%= code2 %>"/>
-    <button type="submit">Générer</button>
-</form>
+    <div class="col-md-10">
+        <label class="form-label">Nouveau Code-barres</label>
+        <input
+            type="text"
+            name="msg"
+            value="<%= code %>"
+            class="form-control">
+    </div>
 
-<!-- Formulaire simple pour tester la lecture d'un article via articleId -->
-<form method="get" action="barcode4j.jsp" class="mt-3">
-    <label>Afficher article par articleId (id/ref/ean) : </label>
-    <input type="text" name="articleId" value="<%= articleId != null ? articleId : "" %>" />
-    <button type="submit">Afficher</button>
+    <div class="col-md-2 d-grid align-items-end">
+        <button class="btn btn-primary">
+            Générer
+        </button>
+    </div>
+
+</form>
+<form action="PurchaseOrder" method="get" class="row g-3 mb-4">
+
+    <div class="col-md-10">
+        <label class="form-label">Nouveau DataMatrix</label>
+        <input
+            type="text"
+            name="msg"
+            value="<%= code2 %>"
+            class="form-control">
+    </div>
+
+    <div class="col-md-2 d-grid align-items-end">
+        <button class="btn btn-success">
+            Générer
+        </button>
+    </div>
+
+</form>
+<form method="get" action="barcode4j.jsp" class="row g-3">
+
+    <div class="col-md-10">
+        <label class="form-label">
+            Rechercher un article (id, ref ou EAN)
+        </label>
+
+        <input
+            type="text"
+            class="form-control"
+            name="articleId"
+            value="<%= articleId != null ? articleId : "" %>">
+    </div>
+
+    <div class="col-md-2 d-grid align-items-end">
+        <button class="btn btn-dark">
+            Rechercher
+        </button>
+    </div>
+
 </form>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
 </body>
 </html>
