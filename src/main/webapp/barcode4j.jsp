@@ -9,7 +9,7 @@
         
          <link rel="stylesheet" href="css/style.css">
     </head>
-  <body class="bg-light">
+  <body class="bg-light text-center justify-content-center">
 
 <div class="container py-5>
         <span class="bord bord-haut">Coller le ruban adhésif ici</span>
@@ -31,7 +31,7 @@
     </h2>
 
     <p class="text-muted">
-        Barcode4J - Mondial Relay
+        Mondial Relay
     </p>
 
 </div>
