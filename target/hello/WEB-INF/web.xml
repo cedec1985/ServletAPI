@@ -9,10 +9,14 @@
     <servlet>
         <servlet-name>Time</servlet-name>
         <!-- le nom de la classe implémentant la servlet (précédé du nom du package) -->
-        <servlet-class>servlet.Time</servlet-class>
+        <servlet-class>Servlet.Time</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Barcode</servlet-name>
+        <servlet-name>Article</servlet-name>
+        <servlet-class>Servlet.Article</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GenerateBarcode</servlet-name>
         <servlet-class>org.krysalis.barcode4j.servlet.BarcodeServlet</servlet-class>
     </servlet>
     <servlet>
@@ -21,11 +25,11 @@
     </servlet>
     <servlet>
         <servlet-name>PdfExportServlet</servlet-name>
-        <servlet-class>servlet.PdfExportServlet</servlet-class>
+        <servlet-class>Servlet.PdfExportServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BarcodeUtil</servlet-name>
-        <servlet-class>servlet.BarcodeUtil</servlet-class>
+        <servlet-name>PurchaseOrder</servlet-name>
+        <servlet-class>Servlet.PurchaseOrder</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Time</servlet-name>
@@ -34,19 +38,19 @@
     </servlet-mapping>
     <!-- l'association de la servlet avec un motif d'URL -->
     <servlet-mapping>
-        <servlet-name>Barcode</servlet-name>
-        <url-pattern>/Barcode</url-pattern>
+        <servlet-name>Article</servlet-name>
+        <url-pattern>/Article</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>QRCode</servlet-name>
-        <url-pattern>/QRCode</url-pattern>
+        <servlet-name>GenerateBarcode</servlet-name>
+        <url-pattern>/GenerateBarcode</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PdfExportServlet</servlet-name>
         <url-pattern>/PdfExportServlet</url-pattern>
     </servlet-mapping>
      <servlet-mapping>
-        <servlet-name>BarcodeUtil</servlet-name>
-        <url-pattern>/BarcodeUtil</url-pattern>
+        <servlet-name>PurchaseOrder</servlet-name>
+        <url-pattern>/PurchaseOrder</url-pattern>
     </servlet-mapping>
 </web-app>
