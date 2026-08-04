@@ -9,3 +9,7 @@ Appeler les méthodes qui affichent les métadonnées(adresse du serveur, naviga
 **Afficher un code-barres et un QRCode**
 
 Utiliser le servlet Barcode4j pour afficher un code-barres et un QRCode
+
+**Afficher un formulaire à remplir et le bon de commande avec les codes barres**
+
+Utiliser le mécanisme MVC (méthode, vue, contrôleur)
