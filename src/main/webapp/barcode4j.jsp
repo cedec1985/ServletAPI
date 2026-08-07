@@ -7,32 +7,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>JSP Page</title>
         
-         <link rel="stylesheet" href="css/style.css">
+         <link rel="stylesheet" href="css/style.css"> 
     </head>
-  <body class="bg-light text-center justify-content-center">
+  <body class="bg-light">
 
-<div class="container py-5>
         <span class="bord bord-haut">Coller le ruban adhésif ici</span>
         <span class="bord bord-droite">Coller le ruban adhésif ici</span>
         <span class="bord bord-bas">Coller le ruban adhésif ici</span>
         <span class="bord bord-gauche">Coller le ruban adhésif ici</span>
-      
 
-<div class="text-center mb-5">
+<div>
 
     <img src="images/BAL.png" width="70">
 
     <img src="images/mondialrelay.jpg"
-         class="ms-3"
-         width="220">
-
-    <h2 class="mt-4">
-        Génération des étiquettes
-    </h2>
-
-    <p class="text-muted">
-        Mondial Relay
-    </p>
+        
+         width="120">
 
 </div>
 
@@ -76,15 +66,12 @@
     }
 %>
 
-<div class="bg-light p-3">
+<div class="bg-light">
 <% if (article != null) { %>
-   <div class="card shadow-sm mb-4">
-    <div class="card-header bg-primary text-white">
-        Fiche article
-    </div>
+   <div class="card shadow">
 
     <div class="card-body">
-        <table class="table table-striped table-bordered">
+        <table class="table table-bordered">
             <tbody>
                 <tr>
                     <th width="30%">ID</th>
@@ -113,22 +100,17 @@
             </tbody>
         </table>
 
-        <div class="alert alert-info mb-0">
-            Code utilisé :
-            <strong><%= code %></strong>
-        </div>
-
     </div>
 </div>
     <p>Code utilisé pour la génération: <strong><%= code %></strong></p>
 <% } else { %>
     <p>Aucun article trouvé pour articleId=<%= articleId %></p>
 <% } %>
+</div>
+<div>
 
-<div class="row g-4">
-
-    <div class="col-md-6">
-        <div class="card text-center shadow-sm">
+    <div>
+        <div class="card shadow">
 
             <div class="card-header">
                 Code-barres
@@ -138,7 +120,7 @@
 
                 <img
                     src="<%= request.getContextPath() %>/servlet/PurchaseOrder?msg=<%= java.net.URLEncoder.encode(code,"UTF-8") %>"
-                    class="img-fluid p-3"
+                    class="img-fluid"
                     alt="Code-barres">
 
             </div>
@@ -146,8 +128,8 @@
         </div>
     </div>
 
-    <div class="col-md-6">
-        <div class="card text-center shadow-sm">
+    <div>
+        <div class="card shadow">
 
             <div class="card-header">
                 DataMatrix / QR
@@ -157,7 +139,7 @@
 
                 <img
                     src="<%= request.getContextPath() %>/servlet/PurchaseOrder?msg=<%= java.net.URLEncoder.encode(code2,"UTF-8") %>&size=250&type=datamatrix&fmt=svg"
-                    class="img-fluid p-3"
+                    class="img-fluid"
                     alt="QR">
 
             </div>
@@ -166,11 +148,10 @@
     </div>
 
 </div>
+<div>
+<form action="PurchaseOrder" method="get">
 
-<hr/>
-<form action="PurchaseOrder" method="get" class="row g-3 mb-4">
-
-    <div class="col-md-10">
+    <div>
         <label class="form-label">Nouveau Code-barres</label>
         <input
             type="text"
@@ -179,16 +160,16 @@
             class="form-control">
     </div>
 
-    <div class="col-md-2 d-grid align-items-end">
+    <div>
         <button class="btn btn-primary">
             Générer
         </button>
     </div>
 
 </form>
-<form action="PurchaseOrder" method="get" class="row g-3 mb-4">
+<form action="PurchaseOrder" method="get">
 
-    <div class="col-md-10">
+    <div>
         <label class="form-label">Nouveau DataMatrix</label>
         <input
             type="text"
@@ -197,16 +178,16 @@
             class="form-control">
     </div>
 
-    <div class="col-md-2 d-grid align-items-end">
+    <div>
         <button class="btn btn-success">
             Générer
         </button>
     </div>
 
 </form>
-<form method="get" action="barcode4j.jsp" class="row g-3">
+<form method="get" action="barcode4j.jsp">
 
-    <div class="col-md-10">
+    <div>
         <label class="form-label">
             Rechercher un article (id, ref ou EAN)
         </label>
@@ -218,7 +199,7 @@
             value="<%= articleId != null ? articleId : "" %>">
     </div>
 
-    <div class="col-md-2 d-grid align-items-end">
+    <div >
         <button class="btn btn-dark">
             Rechercher
         </button>
@@ -228,7 +209,5 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
 </body>
 </html>

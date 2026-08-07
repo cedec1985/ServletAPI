@@ -1,9 +1,3 @@
-<%-- -
-    Document   : result
-    Created on : 1 juin 2026, 12:35:57
-    Author     : cedric
---%>
-
 
 <%@page import="java.net.URLEncoder"%>
 <%@page import="java.util.List"%>
@@ -19,7 +13,6 @@
          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
          <link rel="stylesheet" href="css/style.css"> 
     </head>
-<!-- PARTIE CHECKBOX -->
 <body class="bg-light">
  
 <%
@@ -32,9 +25,7 @@
  %>
 
 <%
-    List<String> urls = (List<String>) request.getAttribute("urls");
- 
-    
+    List<String> urls = (List<String>) request.getAttribute("urls");  
 %>
 
 <div class="row mt-4">
@@ -68,8 +59,8 @@
 %>
 <!-- zone imprimable -->
 <div class="mt-4" id="print-area" style="text-align:center; margin-top:40px;">
-<img src="images/samsung.png" width="150" >
-<h2 class="text-center mb-4">QR Code & EAN‑13 générés</h2>
+<img src="/images/out.png" width="150" >
+<img src="/images/out2.png" width="150" >
 <div class="row text-center">
 <!-- QR CODE -->
 <div class="col-md-6">

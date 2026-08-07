@@ -31,7 +31,7 @@ import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 public class GenerateBarcode extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private final String barCodePath = "images/out.png";
+    private final String barCodePath = "Images/out2.png";
 
     public GenerateBarcode(){
     super();
@@ -147,9 +147,6 @@ public class GenerateBarcode extends HttpServlet {
 
             bean.generateBarcode(canvas, gs1);
             canvas.finish();
-           
-      System.out.println("Bar Code is generated successfully…");
-
 
             request.setAttribute("code", code);
             request.setAttribute("label", msg);

@@ -38,9 +38,9 @@ import com.google.zxing.common.BitMatrix;
 public class PurchaseOrder extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    String barcodePath = "C:\\hello\\src\\main\\java\\images\\excel.png"; 
+    String barcodePath = "/Images/out.png"; 
     @SuppressWarnings("unused")
-    String barcodePath2 ="/images/out2.png";
+    String barcodePath2 ="/Images/out2.png";
    
  
 
@@ -130,13 +130,13 @@ public class PurchaseOrder extends HttpServlet {
         bean.doQuietZone(true);
 
         // 3. Préparer la réponse HTTP
-        response.setContentType("image/png");
+      //  response.setContentType("image/png");
 
         OutputStream out = response.getOutputStream();
         try {
             // 4. Canvas pour image bitmap
             BitmapCanvasProvider canvas = new BitmapCanvasProvider(
-                    out, "image/x-png", dpi,
+                    out, "image/png", dpi,
                     BufferedImage.TYPE_BYTE_BINARY, false, 0);
 
             // 5. Générer le code‑barres
@@ -183,10 +183,10 @@ public class PurchaseOrder extends HttpServlet {
             boolean antiAlias = false;
             int orientation = 0;  
             OutputStream data = response.getOutputStream();
-            BitmapCanvasProvider canvas2 = new BitmapCanvasProvider(data, "image/png",300,BufferedImage.TYPE_BYTE_BINARY, antiAlias, orientation);
+            BitmapCanvasProvider canvas2 = new BitmapCanvasProvider(data, "image/x-png",300,BufferedImage.TYPE_BYTE_BINARY, antiAlias, orientation);
             
    // 5. Générer le code-barres
-           bean.generateBarcode(canvas2, msg);
+           datamatrix.generateBarcode(canvas2, msg);
                 
    // 6. Finaliser l'écriture
          canvas.finish();
