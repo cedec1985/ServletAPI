@@ -16,16 +16,18 @@
   <li>Nom: <%= article.getName() %></li>
   <li>Référence: <%= article.getRef() %></li>
   <li>EAN: <%= article.getEan() %></li>
-  <li>Date livraison: <%= article.getDeliveryDate() %></li>
+  <li>Date livraison: <%= (article.getDeliveryDate() != null ? article.getDeliveryDate().toString() : "") %></li>
   <li>Destinataire: <%= article.getRecipient() %></li>
 </ul>
 
 <img alt="Code-barres" src="<%= request.getContextPath() %>/servlet/PurchaseOrder?msg=<%= java.net.URLEncoder.encode(article.getEan() != null ? article.getEan() : article.getRef(), "UTF-8") %>" />
 
 <!-- QR en SVG -->
-<object type="image/svg+xml" data="<%= request.getContextPath() %>/servlet/PurchaseOrder?msg=<%= java.net.URLEncoder.encode(article.getEan() != null ? article.getEan() : article.getRef(), "UTF-8") %>&size=250&type=datamatrix&fmt=svg" width="250" height="250">
+<object type="image/svg+xml" data="<%= request.getContextPath() %>/servlet/PurchaseOrder?msg=<%= java.net.URLEncoder.encode(article.getEan() != null ? article.getEan() : article.getRef(), "UTF-8") %>&[...]">
   Votre navigateur ne supporte pas les SVG ou le QR n'a pas pu être chargé.
 </object>
+
+<p><a href="<%= request.getContextPath() %>/scan.jsp">Scanner un autre code</a></p>
 
 </body>
 </html>

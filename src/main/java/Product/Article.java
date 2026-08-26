@@ -1,33 +1,57 @@
 package Product;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "articles", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"ref"}),
+        @UniqueConstraint(columnNames = {"ean"})
+})
 public class Article {
-    private Product product;
-    private String deliveryDate;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+
+    private String ref;
+
+    private String ean;
+
+    @Column(name = "delivery_date")
+    private LocalDate deliveryDate;
+
     private String recipient;
 
-    public Article() {}
+    public Article() { }
 
-    public Article(Product product, String deliveryDate, String recipient) {
-        this.product = product;
-        this.deliveryDate = deliveryDate;
-        this.recipient = recipient;
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getRef() { return ref; }
+    public void setRef(String ref) { this.ref = ref; }
+
+    public String getEan() { return ean; }
+    public void setEan(String ean) { this.ean = ean; }
+
+    public LocalDate getDeliveryDate() { return deliveryDate; }
+    public void setDeliveryDate(LocalDate deliveryDate) { this.deliveryDate = deliveryDate; }
+
+    public String getRecipient() { return recipient; }
+    public void setRecipient(String recipient) { this.recipient = recipient; }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", ref='" + ref + '\'' +
+                ", ean='" + ean + '\'' +
+                '}';
     }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public String getDeliveryDate() {
-        return deliveryDate;
-    }
-
-    public String getRecipient() {
-        return recipient;
-    }
-
-    // Convenience getters delegating to Product
-    public String getId() { return product != null ? product.getId() : null; }
-    public String getName() { return product != null ? product.getName() : null; }
-    public String getRef() { return product != null ? product.getRef() : null; }
-    public String getEan() { return product != null ? product.getEan() : null; }
 }

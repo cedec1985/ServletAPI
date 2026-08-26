@@ -15,6 +15,10 @@
     <button type="submit">Ajouter</button>
 </form>
 
+<p>
+  <a href="<%= request.getContextPath() %>/scan.jsp">Ouvrir le scanner de code-barres</a>
+</p>
+
 <h3>Articles existants</h3>
 <ul>
 <% java.util.List<Product.Article> list = (java.util.List<Product.Article>) request.getAttribute("articles");
