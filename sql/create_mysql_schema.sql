@@ -1,5 +1,4 @@
 -- MySQL initialization script for ServletAPI (creates database, user and articles table)
--- Adjust database name, username and password as needed.
 
 -- 1) Create database (if not exists)
 CREATE DATABASE IF NOT EXISTS `servletapi` 
