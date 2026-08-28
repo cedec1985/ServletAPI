@@ -21,7 +21,7 @@ public class ArticleServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Article> articles = repo.findAll();
         req.setAttribute("articles", articles);
-        req.getRequestDispatcher("/WEB-INF/articleForm.jsp").forward(req, resp);
+        req.getRequestDispatcher("/articleForm.jsp").forward(req, resp);
     }
 
     @Override
@@ -41,6 +41,6 @@ public class ArticleServlet extends HttpServlet {
         req.getServletContext().setAttribute("articles", repo.findAll());
 
         req.setAttribute("article", saved);
-        req.getRequestDispatcher("/WEB-INF/articleView.jsp").forward(req, resp);
+        req.getRequestDispatcher("/articleView.jsp").forward(req, resp);
     }
 }
