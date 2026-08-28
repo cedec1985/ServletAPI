@@ -1,7 +1,14 @@
 package Product;
 
-import javax.persistence.*;
 import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "articles", uniqueConstraints = {
@@ -25,7 +32,7 @@ public class Article {
 
     private String recipient;
 
-    public Article() { }
+    public Article(Product newP, LocalDate localDate, String string) { }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -53,5 +60,15 @@ public class Article {
                 ", ref='" + ref + '\'' +
                 ", ean='" + ean + '\'' +
                 '}';
+    }
+
+    public void setProduct(Product p) {
+        this.name = p.getName();
+        this.ref = p.getRef();
+        this.ean = p.getEan();
+    }
+
+    public void setDeliveryDate(String deliveryDate2) {
+        this.deliveryDate = LocalDate.parse(deliveryDate2);
     }
 }
