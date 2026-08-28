@@ -32,7 +32,7 @@ public class Article {
 
     private String recipient;
 
-    public Article() { }
+    public Article(Product newP, LocalDate localDate, String string) { }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -63,12 +63,12 @@ public class Article {
     }
 
     public void setProduct(Product p) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setProduct'");
+        this.name = p.getName();
+        this.ref = p.getRef();
+        this.ean = p.getEan();
     }
 
     public void setDeliveryDate(String deliveryDate2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDeliveryDate'");
+        this.deliveryDate = LocalDate.parse(deliveryDate2);
     }
 }

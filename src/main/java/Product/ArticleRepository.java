@@ -19,11 +19,11 @@ public class ArticleRepository {
     public Article save(Article a) {
         if (a == null) return null;
         // If product has no id, generate one
-        if (a.getId() == null || a.getId().isEmpty()) {
+        if (a.getId() == null ) {
             String id = String.valueOf(counter.getAndIncrement());
             // Product has no setter; create a new Product with the id
-            Product p = a.getProduct();
-            Product newP = new Product(id, p != null ? p.getName() : null, p != null ? p.getRef() : null, p != null ? p.getEan() : null);
+            // Avoid calling a.getProduct() if Article does not expose it
+            Product newP = new Product(id, null, null, null);
             Article newA = new Article(newP, a.getDeliveryDate(), a.getRecipient());
             articles.add(newA);
             return newA;

@@ -34,7 +34,7 @@ public class ArticleServlet extends HttpServlet {
         String recipient = req.getParameter("recipient");
 
         Product p = new Product(id, name, ref, ean);
-        Article a = new Article();
+        Article a = new Article(p, null, recipient);
         a.setProduct(p);
         a.setDeliveryDate(deliveryDate);    
         a.setRecipient(recipient);
