@@ -1,5 +1,22 @@
 {
     "cSpell.words": [
         "taglib"
+    ],
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MariaDB",
+            "name": "myConnectionDB",
+            "database": "servletapi",
+            "username": "root",
+            "askForPassword": true
+        }
     ]
 }
