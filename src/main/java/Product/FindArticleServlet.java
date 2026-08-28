@@ -48,4 +48,8 @@ public class FindArticleServlet extends HttpServlet {
             resp.setContentType("text/html;charset=UTF-8");
             resp.getWriter().println("<html><body>");
             resp.getWriter().println("<p>Aucun article trouvé pour : " + code + "</p>");
-            resp.getWriter().println("<p><a href=\"" + req.getContextPath() + \
+            resp.getWriter().println("<p><a href=\"" + req.getContextPath() + "/\">Retour à l'accueil</a></p>");
+            resp.getWriter().println("</body></html>");
+        }
+    }
+}
