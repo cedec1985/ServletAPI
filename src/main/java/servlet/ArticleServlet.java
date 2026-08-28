@@ -34,7 +34,10 @@ public class ArticleServlet extends HttpServlet {
         String recipient = req.getParameter("recipient");
 
         Product p = new Product(id, name, ref, ean);
-        Article a = new Article(p, deliveryDate, recipient);
+        Article a = new Article();
+        a.setProduct(p);
+        a.setDeliveryDate(deliveryDate);    
+        a.setRecipient(recipient);
         Article saved = repo.save(a);
 
         // update application attribute for barcode4j.jsp lookup convenience
