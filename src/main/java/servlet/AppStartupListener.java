@@ -19,5 +19,8 @@ public class AppStartupListener implements ServletContextListener {
         sce.getServletContext().setAttribute("articles", articles);
     }
     @Override
-    public void contextDestroyed(ServletContextEvent sce) {}
+    public void contextDestroyed(ServletContextEvent sce) {
+        // No cleanup is required for this application context because the
+        // servlet container manages the lifecycle of the application-scoped data.
+    }
 }
