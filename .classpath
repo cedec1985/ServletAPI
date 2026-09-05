@@ -36,7 +36,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/time.jsp"/>
 	<classpathentry kind="lib" path="target/hello.war"/>
 	<classpathentry kind="src" path="target/generated-sources/annotations">
 		<attributes>

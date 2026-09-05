@@ -32,7 +32,14 @@ public class Article {
 
     private String recipient;
 
-    public Article(Product newP, LocalDate localDate, String string) { }
+    public Article() {
+        /*
+         * This no-arg constructor is intentionally left empty because JPA/Hibernate
+         * creates entities via reflection and populates fields afterward.
+         * Keeping it empty is required for entity instantiation; initialization is
+         * done through setters or persistence provider metadata.
+         */
+    }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -70,5 +77,9 @@ public class Article {
 
     public void setDeliveryDate(String deliveryDate2) {
         this.deliveryDate = LocalDate.parse(deliveryDate2);
+    }
+
+    public void setDate(String string) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

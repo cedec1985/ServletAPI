@@ -1,6 +1,7 @@
 package Product;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +24,9 @@ public class ArticleRepository {
             String id = String.valueOf(counter.getAndIncrement());
             // Product has no setter; create a new Product with the id
             // Avoid calling a.getProduct() if Article does not expose it
-            Product newP = new Product(id, null, null, null);
-            Article newA = new Article(newP, a.getDeliveryDate(), a.getRecipient());
+            @SuppressWarnings("unused")
+			Product newP = new Product(id, null, null, null);
+            Article newA = new Article();
             articles.add(newA);
             return newA;
         } else {
@@ -44,7 +46,9 @@ public class ArticleRepository {
 
     public Optional<Article> findById(String id) {
         if (id == null) return Optional.empty();
-        return articles.stream().filter(x -> id.equals(x.getId())).findFirst();
+        return articles.stream()
+                .filter(x -> id.equals(x.getId() == null ? null : x.getId().toString()))
+                .findFirst();
     }
 
     public Optional<Article> findByRef(String ref) {

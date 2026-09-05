@@ -86,10 +86,21 @@
              <version>8.0.33</version>
          </dependency>
          <dependency>
+             <groupId>org.mariadb.jdbc</groupId>
+             <artifactId>mariadb-java-client</artifactId>
+             <version>3.5.10</version>
+         </dependency>
+         <dependency>
              <groupId>org.slf4j</groupId>
              <artifactId>slf4j-simple</artifactId>
              <version>1.7.36</version>
          </dependency>
+         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 <build>
     <plugins>
@@ -103,7 +114,26 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId> 
           <version>3.2.1</version>
-         
+          <configuration>
+                <outputDirectory>hello/jar</outputDirectory>
+          </configuration>
+      </plugin>
+      <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>exec-maven-plugin</artifactId>
+      <version>1.2</version>
+       <executions>
+                <execution>
+                    <id>launch main class</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>java</goal>
+                    </goals>
+                    <configuration>
+                        <mainClass>Product.Welcome</mainClass>
+                    </configuration>
+                </execution>
+       </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -120,5 +150,5 @@
     <finalName>${project.artifactId}</finalName>
 </build>
     <name>hello</name>
-    <description>Afiicher la date et l'heure du jour</description>
+    <description>Afiicher la date et l'heure du jour, créer une fiche produit et générer des codes-barres ou des QR Codes, utiliser le scanner</description>
 </project>

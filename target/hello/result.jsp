@@ -17,7 +17,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>JSP Page</title>
          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-       <!-- <link rel="stylesheet" href="style.css">  -->
+       <!-- <link rel="stylesheet" href="css/style.css">  -->
     </head>
 <!-- PARTIE CHECKBOX -->
 <body class="bg-light">
@@ -28,7 +28,7 @@
         String size = request.getParameter("size");
         String []codes = request.getParameterValues("codeTypes");
         String qrUrl = request.getContextPath() + "/QRCode?msg=" + message + "&size=" + size + "&type=" + codes[1] ;
-        String eanUrl = request.getContextPath() + "/Barcode?msg=" + message + "&type=" + codes[0];
+        String eanUrl = request.getContextPath() + "/GenerateBarcode?msg=" + message + "&type=" + codes[0];
  %>
 
 <%
@@ -86,7 +86,7 @@
 <img src="PdfExportServlet?ean=<%= eanUrl %>&qr=<%= qrUrl %>"  class="img-fluid generated-code">      
 
 <button class="btn btn-dark" onclick="printCodes()">Imprimer</button>
-<a href="PdfExportServlet?Barcode=<%= param %>&QRCode=<%= param %>" 
+<a href="PdfExportServlet?GenerateBarcode=<%= param %>&QRCode=<%= param %>" 
    class="btn btn-danger" target="_blank">
     Télécharger PDF
 </a>

@@ -26,6 +26,6 @@ public class Product {
     public String getEan() { return ean; }
 
 public static void main(String args[]) {
-        // TODO code application logic here
+       
     }
 }

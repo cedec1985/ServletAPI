@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <display-name>hello</display-name>
-   
+
     <welcome-file-list>
         <welcome-file>time.html</welcome-file>
     </welcome-file-list>
@@ -20,23 +20,30 @@
         <servlet-class>org.krysalis.barcode4j.servlet.BarcodeServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PdfExportServlet</servlet-name>
-        <servlet-class>servlet.PdfExportServlet</servlet-class>
+        <servlet-name>ArticleServlet</servlet-name>
+        <servlet-class>Servlet.ArticleServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BarcodeUtil</servlet-name>
-        <servlet-class>servlet.BarcodeUtil</servlet-class>
+        <servlet-name>FindArticleServlet</servlet-name>
+        <servlet-class>Product.FindArticleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PdfExportServlet</servlet-name>
+        <servlet-class>Servlet.PdfExportServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GenerateBarcode</servlet-name>
+        <servlet-class>Servlet.GenerateBarcode</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PurchaseOrder</servlet-name>
+        <servlet-class>Servlet.PurchaseOrder</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Time</servlet-name>
-        <!-- le motif d'url (par exemple *.html ou /servlet) -->
         <url-pattern>/Time</url-pattern>
     </servlet-mapping>
     <!-- l'association de la servlet avec un motif d'URL -->
-    <servlet-mapping>
-        <servlet-name>Barcode</servlet-name>
-        <url-pattern>/Barcode</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>QRCode</servlet-name>
         <url-pattern>/QRCode</url-pattern>
@@ -46,7 +53,23 @@
         <url-pattern>/PdfExportServlet</url-pattern>
     </servlet-mapping>
      <servlet-mapping>
-        <servlet-name>BarcodeUtil</servlet-name>
-        <url-pattern>/BarcodeUtil</url-pattern>
+        <servlet-name>GenerateBarcode</servlet-name>
+        <url-pattern>/GenerateBarcode</url-pattern>
     </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>ArticleServlet</servlet-name>
+        <url-pattern>/ArticleServlet</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>FindArticleServlet</servlet-name>
+        <url-pattern>/FindArticle</url-pattern>
+    </servlet-mapping>
+    
+<resource-ref>
+  <description>Connexion DB MySQL</description>
+  <res-ref-name>jdbc/MariaDB</res-ref-name>
+  <res-type>javax.sql.DataSource</res-type>
+  <res-auth>Container</res-auth>
+</resource-ref>
+
 </web-app>

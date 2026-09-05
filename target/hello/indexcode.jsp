@@ -17,7 +17,7 @@
     <div class="card shadow">
         <div class="card-body">
 
-<form action="Barcode" method="get" class="row g-3">
+<form action="GenerateBarcode" method="get" class="row g-3">
     <div class="col-md-6">
     <label class="form-label">Type de code</label>
     <input type="checkbox" name="codeTypes" value="ean"> EAN‑13
